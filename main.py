@@ -93,10 +93,10 @@ def testAddHashTable(iterations, k):
     for i in range(iterations):
         start = timer()
         for j in range(100):
-            h.insert(k[(j + i * 10) % len(k)])
+            h.insert(k[(j + i * 100) % len(k)])
         end = timer()
         times.append((end - start) * 1000)
-        elements.append(i * 10)
+        elements.append(i * 100)
     return times, elements
 
 
@@ -110,7 +110,7 @@ def testSearchHashTable(iterations, k):
         elements.append(j * (i+1))
         start = timer()
         for j in range(10):
-            h.search(random.randint(0, 1000))
+            h.search(k[random.randint(0, iterations * 100 - 1)])
         end = timer()
         times.append((end - start) * 1000)
     return times, elements
@@ -147,7 +147,7 @@ def testHashTable(k):
 
     # test search
     for i in range(10):
-        time, element = testSearchHashTable(10, k)
+        time, element = testSearchHashTable(100, k)
         timesSearch.append(time)
         elementsSearch.append(element)
     for i in range(len(timesSearch[0])):
@@ -246,5 +246,5 @@ if __name__ == '__main__':
     print('PyCharm')
     k = np.random.choice(100000, size=10000, replace=False)
     #testLinkedList(k) #ok
-    #testHashTable(k)
+    testHashTable(k)
     #testABR(k) #ok

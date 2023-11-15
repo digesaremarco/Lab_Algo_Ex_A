@@ -3,12 +3,12 @@ import numpy as np
 
 class HashTable:
     def __init__(self, nitems):
-        self.size = int(nitems/0.8) # the size of the table is 20% bigger than the number of items, it gives a load factor of 0.8
+        self.size = int(nitems)
         self.table = np.full(self.size, None) # initialize the table with None values
 
     def hashfunction(self, key, i):
-        #return (key + i ** 2) % self.size # quadratic probing
-        return (key % self.size + i) % self.size # linear probing has problems with clustering
+        return (key + i ** 2) % self.size # quadratic probing
+        #return (key % self.size + i) % self.size  # linear probing has problems with clustering
 
 
     def insert(self, key):
