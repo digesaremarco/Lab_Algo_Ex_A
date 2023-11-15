@@ -1,3 +1,4 @@
+import os
 from timeit import default_timer as timer
 import numpy as np
 import matplotlib.pyplot as plt
@@ -64,6 +65,8 @@ def testLinkedList(k):
     plt.xlabel('Elementi nella lista')
     plt.ylabel('Tempo di esecuzione (millisecondi)')
     plt.title('Performance inserimento in lista concatenata')
+    save_path = os.path.join(os.getcwd(), 'insert_List.png')
+    plt.savefig(save_path)
     plt.show()
 
     # test search
@@ -83,6 +86,8 @@ def testLinkedList(k):
     plt.xlabel('Elementi nella lista')
     plt.ylabel('Tempo di esecuzione (millisecondi)')
     plt.title('Performance ricerca in lista concatenata')
+    save_path = os.path.join(os.getcwd(), 'search_List.png')
+    plt.savefig(save_path)
     plt.show()
 
 
@@ -143,6 +148,8 @@ def testHashTable(k):
     plt.xlabel('Elementi nella tabella hash')
     plt.ylabel('Tempo di esecuzione (millisecondi)')
     plt.title('Performance inserimento in tabella hash')
+    save_path = os.path.join(os.getcwd(), 'insert_Hash.png')
+    plt.savefig(save_path)
     plt.show()
 
     # test search
@@ -162,6 +169,8 @@ def testHashTable(k):
     plt.xlabel('Elementi nella tabella hash')
     plt.ylabel('Tempo di esecuzione (millisecondi)')
     plt.title('Performance ricerca in tabella hash')
+    save_path = os.path.join(os.getcwd(), 'search_Hash.png')
+    plt.savefig(save_path)
     plt.show()
 
 def testAddABR(iterations, k):
@@ -220,6 +229,8 @@ def testABR(k):
     plt.ylabel('Tempo di esecuzione (millisecondi)')
     plt.title('Performance inserimento in albero binario di ricerca')
     #plt.ylim([0, 0.3]) # the y axis is limited to 0.2 milliseconds because the time is too small
+    save_path = os.path.join(os.getcwd(), 'insert_ABR.png')
+    plt.savefig(save_path)
     plt.show()
 
     # test search
@@ -236,15 +247,17 @@ def testABR(k):
         avgTimesSearch[i] /= len(timesSearch)
         avgElementsSearch[i] /= len(timesSearch)
     plt.plot(avgElementsSearch, avgTimesSearch)
-    plt.xlabel('Elementi nell\'albero')
+    plt.xlabel('Elementi nell albero')
     plt.ylabel('Tempo di esecuzione (millisecondi)')
     plt.title('Performance ricerca in albero binario di ricerca')
     plt.ylim([0, 0.3])
+    save_path = os.path.join(os.getcwd(), 'search_ABR.png')
+    plt.savefig(save_path)
     plt.show()
 
 if __name__ == '__main__':
     print('PyCharm')
     k = np.random.choice(100000, size=10000, replace=False)
-    #testLinkedList(k) #ok
+    testLinkedList(k) #ok
     testHashTable(k)
-    #testABR(k) #ok
+    testABR(k) #ok
