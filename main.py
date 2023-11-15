@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import random
 import LinkedList
 import HashTable
+import ABR
 
 
 def testAddLinkedList(iterations, k):
@@ -12,8 +13,8 @@ def testAddLinkedList(iterations, k):
     l = LinkedList.LinkedList()
     for i in range(iterations):
         start = timer()
-        for j in range(10):
-            l.add(k[(j + i * 50) % 1000])
+        for j in range(100):
+            l.add(k[(j + i * 10) % len(k)])
         end = timer()
         times.append((end - start) * 1000)
         elements.append(l.size())
@@ -26,7 +27,7 @@ def testSearchLinkedList(iterations, k):
     l = LinkedList.LinkedList()
     for i in range(iterations):
         for j in range(100):
-            l.add(k[(j + i * 50) % 1000])
+            l.add(k[(j + i * 10) % len(k)])
         start = timer()
         for j in range(10):
             l.search(random.randint(0, 1000000))
@@ -47,7 +48,7 @@ def testLinkedList(k):
     avgElementsSearch = []
 
     # test add
-    for i in range(300):
+    for i in range(10):
         time, element = testAddLinkedList(100, k)
         timesAdd.append(time)
         elementsAdd.append(element)
@@ -66,8 +67,8 @@ def testLinkedList(k):
     plt.show()
 
     # test search
-    for i in range(300):
-        time, element = testSearchLinkedList(10, k)
+    for i in range(10):
+        time, element = testSearchLinkedList(100, k)
         timesSearch.append(time)
         elementsSearch.append(element)
     for i in range(len(timesSearch[0])):
@@ -91,7 +92,7 @@ def testAddHashTable(iterations, k):
     h = HashTable.HashTable(len(k))
     for i in range(iterations):
         start = timer()
-        for j in range(10):
+        for j in range(100):
             h.insert(k[(j + i * 10) % len(k)])
         end = timer()
         times.append((end - start) * 1000)
@@ -126,7 +127,7 @@ def testHashTable(k):
     avgElementsSearch = []
 
     # test add
-    for i in range(300):
+    for i in range(10):
         time, element = testAddHashTable(100, k)
         timesAdd.append(time)
         elementsAdd.append(element)
@@ -145,7 +146,7 @@ def testHashTable(k):
     plt.show()
 
     # test search
-    for i in range(100):
+    for i in range(10):
         time, element = testSearchHashTable(10, k)
         timesSearch.append(time)
         elementsSearch.append(element)
@@ -163,11 +164,87 @@ def testHashTable(k):
     plt.title('Performance ricerca in tabella hash')
     plt.show()
 
+def testAddABR(iterations, k):
+    times = []
+    elements = []
+    a = ABR.ABR()
+    for i in range(iterations):
+        start = timer()
+        for j in range(100):
+            a.add(k[(j + i * 10) % len(k)])
+        end = timer()
+        times.append((end - start) * 1000)
+        elements.append(i * 10)
+    return times, elements
+
+def testSearchABR(iterations, k):
+    times = []
+    elements = []
+    a = ABR.ABR()
+    for i in range(iterations):
+        for j in range(100):
+            a.add(k[(j + i * 10) % len(k)])
+        elements.append(j * (i+1))
+        start = timer()
+        for j in range(10):
+            a.search(random.randint(0, 100000))
+        end = timer()
+        times.append((end - start) * 1000)
+    return times, elements
+
+def testABR(k):
+    timesAdd = []
+    elementsAdd = []
+    timesSearch = []
+    elementsSearch = []
+    avgTimesAdd = []
+    avgElementsAdd = []
+    avgTimesSearch = []
+    avgElementsSearch = []
+
+    # test add
+    for i in range(100):
+        time, element = testAddABR(100, k)
+        timesAdd.append(time)
+        elementsAdd.append(element)
+    for i in range(len(timesAdd[0])):
+        avgTimesAdd.append(0)
+        avgElementsAdd.append(0)
+        for j in range(len(timesAdd)):
+            avgTimesAdd[i] += timesAdd[j][i]
+            avgElementsAdd[i] += elementsAdd[j][i]
+        avgTimesAdd[i] /= len(timesAdd)
+        avgElementsAdd[i] /= len(timesAdd)
+    plt.plot(avgElementsAdd, avgTimesAdd)
+    plt.xlabel('Elementi nell\'albero')
+    plt.ylabel('Tempo di esecuzione (millisecondi)')
+    plt.title('Performance inserimento in albero binario di ricerca')
+    #plt.ylim([0, 0.3]) # the y axis is limited to 0.2 milliseconds because the time is too small
+    plt.show()
+
+    # test search
+    for i in range(100):
+        time, element = testSearchABR(100, k)
+        timesSearch.append(time)
+        elementsSearch.append(element)
+    for i in range(len(timesSearch[0])):
+        avgTimesSearch.append(0)
+        avgElementsSearch.append(0)
+        for j in range(len(timesSearch)):
+            avgTimesSearch[i] += timesSearch[j][i]
+            avgElementsSearch[i] += elementsSearch[j][i]
+        avgTimesSearch[i] /= len(timesSearch)
+        avgElementsSearch[i] /= len(timesSearch)
+    plt.plot(avgElementsSearch, avgTimesSearch)
+    plt.xlabel('Elementi nell\'albero')
+    plt.ylabel('Tempo di esecuzione (millisecondi)')
+    plt.title('Performance ricerca in albero binario di ricerca')
+    plt.ylim([0, 0.3])
+    plt.show()
 
 if __name__ == '__main__':
     print('PyCharm')
-    h = np.random.randint(0, 100000, 1000)  # generate 3000 random numbers between 0 and 1000
-    #testLinkedList(k)
-    k = np.random.choice(10000, size=1000, replace=False)
-    testHashTable(k)
-
+    k = np.random.choice(100000, size=10000, replace=False)
+    #testLinkedList(k) #ok
+    #testHashTable(k)
+    #testABR(k) #ok
