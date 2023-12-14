@@ -256,8 +256,7 @@ def testABR(k):
     plt.show()
 
 if __name__ == '__main__':
-    print('PyCharm')
     k = np.random.choice(100000, size=10000, replace=False)
-    testLinkedList(k) #ok
+    testLinkedList(k)
     testHashTable(k)
-    testABR(k) #ok
+    testABR(k)
