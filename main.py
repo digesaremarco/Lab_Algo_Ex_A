@@ -255,8 +255,114 @@ def testABR(k):
     plt.savefig(save_path)
     plt.show()
 
+
+def testInsertAllStructureOnePlot(k):
+    timesAddList = []
+    timesAddHash = []
+    timesAddABR = []
+    elementsAdd = []
+    avgTimesAddList = []
+    avgTimesAddHash = []
+    avgTimesAddABR = []
+    avgElementsAdd = []
+
+    # test add
+    for i in range(10):
+        time, element = testAddLinkedList(100, k)
+        timesAddList.append(time)
+        elementsAdd.append(element)
+    for i in range(len(timesAddList[0])):
+        avgTimesAddList.append(0)
+        avgElementsAdd.append(0)
+        for j in range(len(timesAddList)):
+            avgTimesAddList[i] += timesAddList[j][i]
+            avgElementsAdd[i] += elementsAdd[j][i]
+        avgTimesAddList[i] /= len(timesAddList)
+        avgElementsAdd[i] /= len(timesAddList)
+    for i in range(10):
+        time, element = testAddHashTable(100, k)
+        timesAddHash.append(time)
+    for i in range(len(timesAddHash[0])):
+        avgTimesAddHash.append(0)
+        for j in range(len(timesAddHash)):
+            avgTimesAddHash[i] += timesAddHash[j][i]
+        avgTimesAddHash[i] /= len(timesAddHash)
+    for i in range(10):
+        time, element = testAddABR(100, k)
+        timesAddABR.append(time)
+    for i in range(len(timesAddABR[0])):
+        avgTimesAddABR.append(0)
+        for j in range(len(timesAddABR)):
+            avgTimesAddABR[i] += timesAddABR[j][i]
+        avgTimesAddABR[i] /= len(timesAddABR)
+    plt.plot(avgElementsAdd, avgTimesAddList, label='Lista concatenata')
+    plt.plot(avgElementsAdd, avgTimesAddHash, label='Tabella hash')
+    plt.plot(avgElementsAdd, avgTimesAddABR, label='Albero binario di ricerca')
+    plt.xlabel('Elementi nella struttura')
+    plt.ylabel('Tempo di esecuzione (millisecondi)')
+    plt.title('Performance inserimento in tutte le strutture')
+    plt.legend()
+    #save_path = os.path.join(os.getcwd(), 'insert_All.png')
+    #plt.savefig(save_path)
+    plt.show()
+
+def testSearchAllStructureOnePlot(k):
+    timesSearchList = []
+    timesSearchHash = []
+    timesSearchABR = []
+    elementsSearch = []
+    avgTimesSearchList = []
+    avgTimesSearchHash = []
+    avgTimesSearchABR = []
+    avgElementsSearch = []
+
+    # test search
+    for i in range(10):
+        time, element = testSearchLinkedList(100, k)
+        timesSearchList.append(time)
+        elementsSearch.append(element)
+    for i in range(len(timesSearchList[0])):
+        avgTimesSearchList.append(0)
+        avgElementsSearch.append(0)
+        for j in range(len(timesSearchList)):
+            avgTimesSearchList[i] += timesSearchList[j][i]
+            avgElementsSearch[i] += elementsSearch[j][i]
+        avgTimesSearchList[i] /= len(timesSearchList)
+        avgElementsSearch[i] /= len(timesSearchList)
+    for i in range(10):
+        time, element = testSearchHashTable(100, k)
+        timesSearchHash.append(time)
+    for i in range(len(timesSearchHash[0])):
+        avgTimesSearchHash.append(0)
+        for j in range(len(timesSearchHash)):
+            avgTimesSearchHash[i] += timesSearchHash[j][i]
+        avgTimesSearchHash[i] /= len(timesSearchHash)
+    for i in range(10):
+        time, element = testSearchABR(100, k)
+        timesSearchABR.append(time)
+    for i in range(len(timesSearchABR[0])):
+        avgTimesSearchABR.append(0)
+        for j in range(len(timesSearchABR)):
+            avgTimesSearchABR[i] += timesSearchABR[j][i]
+        avgTimesSearchABR[i] /= len(timesSearchABR)
+    plt.plot(avgElementsSearch, avgTimesSearchList, label='Lista concatenata')
+    plt.plot(avgElementsSearch, avgTimesSearchHash, label='Tabella hash')
+    plt.plot(avgElementsSearch, avgTimesSearchABR, label='Albero binario di ricerca')
+    plt.xlabel('Elementi nella struttura')
+    plt.ylabel('Tempo di esecuzione (millisecondi)')
+    plt.title('Performance ricerca in tutte le strutture')
+    plt.legend()
+    #save_path = os.path.join(os.getcwd(), 'search_All.png')
+    #plt.savefig(save_path)
+    plt.show()
+
+
+
 if __name__ == '__main__':
     k = np.random.choice(100000, size=10000, replace=False)
-    testLinkedList(k)
-    testHashTable(k)
-    testABR(k)
+    #testLinkedList(k)
+    #testHashTable(k)
+    #testABR(k)
+    testInsertAllStructureOnePlot(k)
+    testSearchAllStructureOnePlot(k)
+
