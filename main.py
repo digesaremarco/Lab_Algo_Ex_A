@@ -302,8 +302,9 @@ def testInsertAllStructureOnePlot(k):
     plt.ylabel('Tempo di esecuzione (millisecondi)')
     plt.title('Performance inserimento in tutte le strutture')
     plt.legend()
-    #save_path = os.path.join(os.getcwd(), 'insert_All.png')
-    #plt.savefig(save_path)
+    #plt.ylim([0, 10])
+    save_path = os.path.join(os.getcwd(), 'insert_All.png')
+    plt.savefig(save_path)
     plt.show()
 
 def testSearchAllStructureOnePlot(k):
@@ -352,17 +353,17 @@ def testSearchAllStructureOnePlot(k):
     plt.ylabel('Tempo di esecuzione (millisecondi)')
     plt.title('Performance ricerca in tutte le strutture')
     plt.legend()
-    #save_path = os.path.join(os.getcwd(), 'search_All.png')
-    #plt.savefig(save_path)
+    save_path = os.path.join(os.getcwd(), 'search_All.png')
+    plt.savefig(save_path)
     plt.show()
 
 
 
 if __name__ == '__main__':
     k = np.random.choice(100000, size=10000, replace=False)
-    #testLinkedList(k)
-    #testHashTable(k)
-    #testABR(k)
+    testLinkedList(k)
+    testHashTable(k)
+    testABR(k)
     testInsertAllStructureOnePlot(k)
     testSearchAllStructureOnePlot(k)
 
